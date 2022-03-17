@@ -8,10 +8,21 @@ class MovieSerializer(serializers.ModelSerializer):
         model = Movie
         fields = ("title", "tagline", "category")
 
+
+class MovieListSerializer(serializers.ModelSerializer):
+    rating_user = serializers.BooleanField()
+    middle_star = serializers.IntegerField()
+
+    class Meta:
+        model = Movie
+        fields = ("id", "title", "tagline", "category", "rating_user", "middle_star")
+
+
 class ReviewCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = "__all__"
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,6 +39,7 @@ class MovieDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         exclude = ("draft",)
+
 
 class CreateRatingSerializer(serializers.ModelSerializer):
     class Meta:
