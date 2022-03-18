@@ -4,11 +4,13 @@ from movies.models import Movie, Actor
 from movies.serializers import CreateRatingSerializer, MovieListSerializer, MovieDetailSerializer, ReviewCreateSerializer, ActorListSerializer, ActorDetailSerializer
 from movies.services import get_client_ip, MovieFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import permissions
 
 class MovieListView(ListAPIView):
     serializer_class = MovieListSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = MovieFilter
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         movies = Movie.objects.filter(draft=False).annotate(
