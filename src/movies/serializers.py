@@ -1,12 +1,25 @@
 from pickle import TRUE
 from rest_framework import serializers
-from movies.models import Movie, Rating, Review
+from movies.models import Movie, Rating, Review, Actor
+
 
 class MovieSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(slug_field="name", read_only=True)
     class Meta:
         model = Movie
         fields = ("title", "tagline", "category")
+
+
+class ActorListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Actor
+        fields = ("id", "name", "image")
+
+
+class ActorDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Actor
+        fields = "__all__"
 
 
 class MovieListSerializer(serializers.ModelSerializer):
@@ -32,8 +45,8 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class MovieDetailSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(slug_field="name", read_only=True)
-    producers = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
-    actors = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
+    producers = ActorListSerializer(read_only=True, many=True)
+    actors = ActorListSerializer(read_only=True, many=True)
     genres = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
     reviews = ReviewSerializer(many=True)
     class Meta:
