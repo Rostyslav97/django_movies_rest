@@ -2,11 +2,14 @@ from django.db import models
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from movies.models import Movie, Actor
 from movies.serializers import CreateRatingSerializer, MovieListSerializer, MovieDetailSerializer, ReviewCreateSerializer, ActorListSerializer, ActorDetailSerializer
-from movies.services import get_client_ip
-
+from movies.services import get_client_ip, MovieFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 class MovieListView(ListAPIView):
     serializer_class = MovieListSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = MovieFilter
+
     def get_queryset(self):
         movies = Movie.objects.filter(draft=False).annotate(
             rating_user = models.Count("ratings", filter=models.Q(ratings__ip=get_client_ip(self.request)))
@@ -14,6 +17,7 @@ class MovieListView(ListAPIView):
         )
         return movies
 
+    # in search line add "year_min=2000&year_max=2002&genres=Fantasy"
 
 class MovieDetailView(RetrieveAPIView):
     queryset = Movie.objects.filter(draft=False)

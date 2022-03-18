@@ -8,6 +8,7 @@ django = "==4.0.1"
 djangorestframework = "==3.13.1"
 pillow = "*"
 psycopg2-binary = "*"
+django-filter = "*"
 
 [dev-packages]
 
