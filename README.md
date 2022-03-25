@@ -11,8 +11,8 @@ Install environment
 ```bash
 # Create virtual environment
 pipenv install
-#pipenv install --dev
 
+#pipenv install --dev
 pipenv shell
 ```
 
