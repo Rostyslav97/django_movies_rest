@@ -1,10 +1,10 @@
-from pickle import TRUE
 from rest_framework import serializers
 from movies.models import Movie, Rating, Review, Actor
 
 
 class MovieSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(slug_field="name", read_only=True)
+
     class Meta:
         model = Movie
         fields = ("title", "tagline", "category")
@@ -49,6 +49,7 @@ class MovieDetailSerializer(serializers.ModelSerializer):
     actors = ActorListSerializer(read_only=True, many=True)
     genres = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
     reviews = ReviewSerializer(many=True)
+
     class Meta:
         model = Movie
         exclude = ("draft",)
@@ -61,8 +62,8 @@ class CreateRatingSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         rating, _ = Rating.objects.update_or_create(
-        ip=validated_data.get('ip', None),
-        movie=validated_data.get('movie', None),
-        defaults={'star': validated_data.get("star")}
+            ip=validated_data.get("ip", None),
+            movie=validated_data.get("movie", None),
+            defaults={"star": validated_data.get("star")},
         )
         return rating

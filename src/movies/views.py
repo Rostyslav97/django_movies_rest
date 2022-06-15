@@ -1,10 +1,18 @@
 from django.db import models
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from movies.models import Movie, Actor
-from movies.serializers import CreateRatingSerializer, MovieListSerializer, MovieDetailSerializer, ReviewCreateSerializer, ActorListSerializer, ActorDetailSerializer
+from movies.serializers import (
+    CreateRatingSerializer,
+    MovieListSerializer,
+    MovieDetailSerializer,
+    ReviewCreateSerializer,
+    ActorListSerializer,
+    ActorDetailSerializer,
+)
 from movies.services import get_client_ip, MovieFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions
+
 
 class MovieListView(ListAPIView):
     serializer_class = MovieListSerializer
@@ -13,13 +21,15 @@ class MovieListView(ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        movies = Movie.objects.filter(draft=False).annotate(
-            rating_user = models.Count("ratings", filter=models.Q(ratings__ip=get_client_ip(self.request)))
-        ).annotate(middle_star=models.Sum(models.F('ratings__star')) / models.Count(models.F('ratings'))
+        movies = (
+            Movie.objects.filter(draft=False)
+            .annotate(rating_user=models.Count("ratings", filter=models.Q(ratings__ip=get_client_ip(self.request))))
+            .annotate(middle_star=models.Sum(models.F("ratings__star")) / models.Count(models.F("ratings")))
         )
         return movies
 
     # in search line add "year_min=2000&year_max=2002&genres=Fantasy"
+
 
 class MovieDetailView(RetrieveAPIView):
     queryset = Movie.objects.filter(draft=False)
@@ -32,6 +42,7 @@ class ReviewCreateView(CreateAPIView):
 
 class AddStarRatingView(CreateAPIView):
     serializer_class = CreateRatingSerializer
+
     def perform_create(self, serializer):
         serializer.save(ip=get_client_ip(self.request))
 
@@ -79,4 +90,4 @@ class ActorsDetailView(RetrieveAPIView):
 #             serializer.save(ip=get_client_ip(request))
 #             return Response(status=201)
 #         else:
-#             return Response(status=400)  
+#             return Response(status=400)

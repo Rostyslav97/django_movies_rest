@@ -9,128 +9,181 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Actor',
+            name="Actor",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, verbose_name='Name')),
-                ('age', models.PositiveSmallIntegerField(default=0, verbose_name='Age')),
-                ('description', models.TextField(verbose_name='Description')),
-                ('image', models.ImageField(upload_to='actors/', verbose_name='Image')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=100, verbose_name="Name")),
+                ("age", models.PositiveSmallIntegerField(default=0, verbose_name="Age")),
+                ("description", models.TextField(verbose_name="Description")),
+                ("image", models.ImageField(upload_to="actors/", verbose_name="Image")),
             ],
             options={
-                'verbose_name': 'Actors and producers',
-                'verbose_name_plural': 'Actors and producers',
+                "verbose_name": "Actors and producers",
+                "verbose_name_plural": "Actors and producers",
             },
         ),
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=150, verbose_name='Category')),
-                ('description', models.TextField(verbose_name='Description')),
-                ('url', models.SlugField(max_length=160, unique=True)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=150, verbose_name="Category")),
+                ("description", models.TextField(verbose_name="Description")),
+                ("url", models.SlugField(max_length=160, unique=True)),
             ],
             options={
-                'verbose_name': 'Category',
-                'verbose_name_plural': 'Categories',
+                "verbose_name": "Category",
+                "verbose_name_plural": "Categories",
             },
         ),
         migrations.CreateModel(
-            name='Genre',
+            name="Genre",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, verbose_name='Name')),
-                ('description', models.TextField(verbose_name='Description')),
-                ('url', models.SlugField(max_length=160, unique=True)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=100, verbose_name="Name")),
+                ("description", models.TextField(verbose_name="Description")),
+                ("url", models.SlugField(max_length=160, unique=True)),
             ],
             options={
-                'verbose_name': 'Genre',
-                'verbose_name_plural': 'Genres',
+                "verbose_name": "Genre",
+                "verbose_name_plural": "Genres",
             },
         ),
         migrations.CreateModel(
-            name='Movie',
+            name="Movie",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=100, verbose_name='Title')),
-                ('tagline', models.CharField(default='', max_length=100, verbose_name='Tagline')),
-                ('description', models.TextField(verbose_name='Description')),
-                ('poster', models.ImageField(upload_to='movies/', verbose_name='Poster')),
-                ('year', models.PositiveSmallIntegerField(default=2022, verbose_name='Release Date')),
-                ('country', models.CharField(max_length=30, verbose_name='Country')),
-                ('world_premiere', models.DateField(default=datetime.date.today, verbose_name='World Premiere')),
-                ('budget', models.PositiveIntegerField(default=0, help_text='put amount in dollars', verbose_name='Budget')),
-                ('fees_in_usa', models.PositiveIntegerField(default=0, help_text='put amount in dollars', verbose_name='USA fees')),
-                ('fees_in_world', models.PositiveIntegerField(default=0, help_text='put amount in dollars', verbose_name='World fees')),
-                ('url', models.SlugField(max_length=160, unique=True)),
-                ('draft', models.BooleanField(default=False, verbose_name='Draft')),
-                ('actors', models.ManyToManyField(related_name='film_actor', to='movies.Actor', verbose_name='actor')),
-                ('category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='movies.category', verbose_name='Category')),
-                ('genres', models.ManyToManyField(to='movies.Genre', verbose_name='genres')),
-                ('producers', models.ManyToManyField(related_name='film_producer', to='movies.Actor', verbose_name='producer')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=100, verbose_name="Title")),
+                ("tagline", models.CharField(default="", max_length=100, verbose_name="Tagline")),
+                ("description", models.TextField(verbose_name="Description")),
+                ("poster", models.ImageField(upload_to="movies/", verbose_name="Poster")),
+                ("year", models.PositiveSmallIntegerField(default=2022, verbose_name="Release Date")),
+                ("country", models.CharField(max_length=30, verbose_name="Country")),
+                ("world_premiere", models.DateField(default=datetime.date.today, verbose_name="World Premiere")),
+                (
+                    "budget",
+                    models.PositiveIntegerField(default=0, help_text="put amount in dollars", verbose_name="Budget"),
+                ),
+                (
+                    "fees_in_usa",
+                    models.PositiveIntegerField(default=0, help_text="put amount in dollars", verbose_name="USA fees"),
+                ),
+                (
+                    "fees_in_world",
+                    models.PositiveIntegerField(
+                        default=0, help_text="put amount in dollars", verbose_name="World fees"
+                    ),
+                ),
+                ("url", models.SlugField(max_length=160, unique=True)),
+                ("draft", models.BooleanField(default=False, verbose_name="Draft")),
+                ("actors", models.ManyToManyField(related_name="film_actor", to="movies.Actor", verbose_name="actor")),
+                (
+                    "category",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="movies.category",
+                        verbose_name="Category",
+                    ),
+                ),
+                ("genres", models.ManyToManyField(to="movies.Genre", verbose_name="genres")),
+                (
+                    "producers",
+                    models.ManyToManyField(related_name="film_producer", to="movies.Actor", verbose_name="producer"),
+                ),
             ],
             options={
-                'verbose_name': 'Film',
-                'verbose_name_plural': 'Films',
+                "verbose_name": "Film",
+                "verbose_name_plural": "Films",
             },
         ),
         migrations.CreateModel(
-            name='RatingStar',
+            name="RatingStar",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('value', models.SmallIntegerField(default=0, verbose_name='Value')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("value", models.SmallIntegerField(default=0, verbose_name="Value")),
             ],
             options={
-                'verbose_name': 'Star Rating',
-                'verbose_name_plural': 'Stars Rating',
-                'ordering': ['-value'],
+                "verbose_name": "Star Rating",
+                "verbose_name_plural": "Stars Rating",
+                "ordering": ["-value"],
             },
         ),
         migrations.CreateModel(
-            name='Review',
+            name="Review",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.EmailField(max_length=254)),
-                ('name', models.CharField(max_length=100, verbose_name='Name')),
-                ('text', models.TextField(max_length=5000, verbose_name='Message')),
-                ('movie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviews', to='movies.movie', verbose_name='movie')),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='movies.review', verbose_name='Parent')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("email", models.EmailField(max_length=254)),
+                ("name", models.CharField(max_length=100, verbose_name="Name")),
+                ("text", models.TextField(max_length=5000, verbose_name="Message")),
+                (
+                    "movie",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reviews",
+                        to="movies.movie",
+                        verbose_name="movie",
+                    ),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="movies.review",
+                        verbose_name="Parent",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Review',
-                'verbose_name_plural': 'Reviews',
+                "verbose_name": "Review",
+                "verbose_name_plural": "Reviews",
             },
         ),
         migrations.CreateModel(
-            name='Rating',
+            name="Rating",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('ip', models.CharField(max_length=15, verbose_name='IP adress')),
-                ('movie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='movies.movie', verbose_name='movie')),
-                ('star', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='movies.ratingstar', verbose_name='star')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("ip", models.CharField(max_length=15, verbose_name="IP adress")),
+                (
+                    "movie",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="movies.movie", verbose_name="movie"
+                    ),
+                ),
+                (
+                    "star",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="movies.ratingstar", verbose_name="star"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Rating',
-                'verbose_name_plural': 'Ratings',
+                "verbose_name": "Rating",
+                "verbose_name_plural": "Ratings",
             },
         ),
         migrations.CreateModel(
-            name='MovieShots',
+            name="MovieShots",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=100, verbose_name='Title')),
-                ('description', models.TextField(verbose_name='Description')),
-                ('image', models.ImageField(upload_to='movie_shots/', verbose_name='Images')),
-                ('movie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='movies.movie', verbose_name='Film')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=100, verbose_name="Title")),
+                ("description", models.TextField(verbose_name="Description")),
+                ("image", models.ImageField(upload_to="movie_shots/", verbose_name="Images")),
+                (
+                    "movie",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="movies.movie", verbose_name="Film"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Movie Shot',
-                'verbose_name_plural': 'Movie Shots',
+                "verbose_name": "Movie Shot",
+                "verbose_name_plural": "Movie Shots",
             },
         ),
     ]

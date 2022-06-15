@@ -2,6 +2,7 @@ from datetime import date
 from django.db import models
 from django.urls import reverse
 
+
 class Category(models.Model):
     name = models.CharField("Category", max_length=150)
     description = models.TextField("Description")
@@ -9,10 +10,11 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"
+
 
 class Actor(models.Model):
     name = models.CharField("Name", max_length=100)
@@ -22,13 +24,14 @@ class Actor(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     def get_absolute_url(self):
         return reverse("actor_detail", kwargs={"slug": self.name})
 
     class Meta:
         verbose_name = "Actors and producers"
         verbose_name_plural = "Actors and producers"
+
 
 class Genre(models.Model):
     name = models.CharField("Name", max_length=100)
@@ -42,9 +45,10 @@ class Genre(models.Model):
         verbose_name = "Genre"
         verbose_name_plural = "Genres"
 
+
 class Movie(models.Model):
     title = models.CharField("Title", max_length=100)
-    tagline = models.CharField("Tagline", max_length=100, default='')
+    tagline = models.CharField("Tagline", max_length=100, default="")
     description = models.TextField("Description")
     poster = models.ImageField("Poster", upload_to="movies/")
     year = models.PositiveSmallIntegerField("Release Date", default=2022)
@@ -65,13 +69,14 @@ class Movie(models.Model):
 
     def get_absolute_url(self):
         return reverse("movie_detail", kwargs={"slug": self.url})
-    
+
     def get_review(self):
         return self.reviews_set.filter(parent__isnull=True)
 
     class Meta:
         verbose_name = "Film"
         verbose_name_plural = "Films"
+
 
 class MovieShots(models.Model):
     title = models.CharField("Title", max_length=100)
@@ -86,16 +91,18 @@ class MovieShots(models.Model):
         verbose_name = "Movie Shot"
         verbose_name_plural = "Movie Shots"
 
+
 class RatingStar(models.Model):
     value = models.SmallIntegerField("Value", default=0)
 
     def __str__(self):
-        return f'{self.value}'
+        return f"{self.value}"
 
     class Meta:
         verbose_name = "Star Rating"
         verbose_name_plural = "Stars Rating"
         ordering = ["-value"]
+
 
 class Rating(models.Model):
     ip = models.CharField("IP adress", max_length=15)
@@ -108,6 +115,7 @@ class Rating(models.Model):
     class Meta:
         verbose_name = "Rating"
         verbose_name_plural = "Ratings"
+
 
 class Review(models.Model):
     email = models.EmailField()

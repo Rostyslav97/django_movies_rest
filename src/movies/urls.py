@@ -1,5 +1,12 @@
 from django.urls import path
-from movies.views import ActorsDetailView, MovieListView, MovieDetailView, ReviewCreateView, AddStarRatingView, ActorsListView, ActorDetailSerializer
+from movies.views import (
+    ActorsDetailView,
+    MovieListView,
+    MovieDetailView,
+    ReviewCreateView,
+    AddStarRatingView,
+    ActorsListView,
+)
 
 urlpatterns = [
     path("movies/", MovieListView.as_view()),
